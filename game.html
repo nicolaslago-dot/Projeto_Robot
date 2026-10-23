@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Robô em Fuga - Jogo</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Imagens -->
+  <script src="js/imagens/recursos.js" defer></script>
+  <script src="js/imagens/assets.js" defer></script>
+  <script src="js/imagens/precarregamento.js" defer></script>
+
+  <!-- Estado e regras da partida -->
+  <script src="js/jogo/estado.js" defer></script>
+  <script src="js/jogo/dificuldade.js" defer></script>
+  <script src="js/jogo/robo.js" defer></script>
+  <script src="js/jogo/colisoes.js" defer></script>
+  <script src="js/jogo/caixas.js" defer></script>
+  <script src="js/jogo/espinhos.js" defer></script>
+  <script src="js/jogo/obstaculos.js" defer></script>
+  <script src="js/jogo/fim-partida.js" defer></script>
+  <script src="js/jogo/animacao.js" defer></script>
+
+  <!-- Elementos e desenho da tela -->
+  <script src="js/interface/elementos.js" defer></script>
+  <script src="js/interface/renderizacao.js" defer></script>
+  <script src="js/interface/tela.js" defer></script>
+  <script src="js/interface/tela-cheia.js" defer></script>
+
+  <!-- Controles -->
+  <script src="js/controles/pausa.js" defer></script>
+  <script src="js/controles/teclado.js" defer></script>
+
+  <!-- Inicialização -->
+  <script src="js/game.js" defer></script>
+</head>
+<body>
+  <main id="jogo" aria-label="Arena do jogo">
+    <div class="barra">
+      <strong>Tempo: <span id="tempo">0.0</span> s</strong>
+      <div class="acoes">
+        <button id="pausar" class="botao-icone" aria-label="Pausar" title="Pausar"><img src="assts/interface/icones/icone-pausa.png" alt=""></button>
+        <button id="tela-cheia" class="botao-icone" aria-label="Tela cheia" title="Tela cheia"><img src="assts/interface/icones/icone-tela-cheia.png" alt=""></button>
+        <a href="menu.html">Menu</a>
+      </div>
+    </div>
+
+    <div id="chao"></div>
+    <div id="sombra-robo" class="sprite" aria-hidden="true"></div>
+    <div id="robo" class="sprite" role="img" aria-label="Robô amarelo"></div>
+    <div id="pausa" hidden>Jogo pausado</div>
+  </main>
+</body>
+</html>

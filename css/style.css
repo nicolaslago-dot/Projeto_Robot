@@ -1,0 +1,580 @@
+:root {
+  --fundo: #111923;
+  --painel: #1b2633;
+  --linha: #344352;
+  --texto: #f0f4f8;
+  --secundario: #a4b4c5;
+  --amarelo: #ffd140;
+  --azul: #38d5ed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+button,
+.botao {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 20px;
+  background: var(--amarelo);
+  color: #17202b;
+  font: 700 16px "Segoe UI", Arial, sans-serif;
+  cursor: pointer;
+}
+
+button:hover,
+.botao:hover {
+  filter: brightness(1.1);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 4px;
+}
+
+a {
+  color: var(--amarelo);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Menus feitos com texto, links e botões HTML. */
+.pagina-menu {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(ellipse at 50% 20%, #293b4b, var(--fundo) 70%);
+}
+
+.menu {
+  width: min(100%, 440px);
+  padding: 32px;
+  text-align: center;
+  background: var(--painel);
+  border: 1px solid var(--linha);
+  border-radius: 20px;
+  box-shadow: 0 24px 70px #0004;
+}
+
+.robo-menu {
+  display: block;
+  width: 144px;
+  height: 144px;
+  margin: 0 auto 20px;
+  background: url('../assts/personagem/robo-parado.png') center / contain no-repeat;
+}
+
+.menu h1 {
+  margin: 0;
+  font-size: clamp(30px, 5vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+
+.descricao-menu {
+  margin: 16px 0 24px;
+  color: var(--secundario);
+  font-size: 15px;
+}
+
+.botao {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  text-decoration: none;
+}
+
+.botao-principal {
+  width: 100%;
+  box-shadow: 0 4px 0 #b88a16;
+}
+
+.botao-principal:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #b88a16;
+}
+
+.link-menu {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px;
+  font-size: 14px;
+  color: var(--secundario);
+}
+
+.placar-final {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.placar-final > div {
+  padding: 18px 8px;
+  border-radius: 12px;
+  background: #111b27;
+}
+
+.placar-final span {
+  color: var(--secundario);
+  font-size: 13px;
+}
+
+.placar-final p {
+  margin: 6px 0 0;
+  line-height: 1.2;
+}
+
+.placar-final strong {
+  font-size: 32px;
+  color: var(--amarelo);
+  font-variant-numeric: tabular-nums;
+}
+
+.placar-final small {
+  color: var(--secundario);
+}
+
+.formulario-registro {
+  text-align: left;
+}
+
+.formulario-registro label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.formulario-registro input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  background: var(--fundo);
+  color: var(--texto);
+  font: inherit;
+}
+
+.formulario-registro input::placeholder {
+  color: var(--secundario);
+}
+
+.formulario-registro input:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+}
+
+.nota-ranking {
+  margin: 14px 0 20px;
+  color: var(--secundario);
+  font-size: 13px;
+}
+
+.mensagem-registro {
+  color: var(--amarelo);
+  font-size: 14px;
+}
+
+.mensagem-registro:empty {
+  margin: 18px 0;
+}
+
+.botao-secundario {
+  width: 100%;
+  border: 1px solid var(--linha);
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+button:disabled {
+  cursor: default;
+  opacity: .65;
+  filter: none;
+}
+
+.menu-ranking {
+  width: min(100%, 560px);
+}
+
+.tabela-ranking {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabela-ranking th,
+.tabela-ranking td {
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--linha);
+}
+
+.tabela-ranking th {
+  color: var(--secundario);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tabela-ranking td:nth-child(2) {
+  overflow-wrap: anywhere;
+}
+
+.tabela-ranking th:last-child,
+.tabela-ranking td:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tabela-ranking tbody tr:first-child {
+  color: var(--amarelo);
+  font-weight: 700;
+}
+
+/* Dimensões compartilhadas entre a aparência e as colisões. */
+#jogo {
+  --robo-largura: 128px;
+  --robo-altura: 119px;
+  --caixa-tamanho: 68px;
+  --espinho-largura: 116px;
+  --area-inferior: 130px;
+
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(#13233333, #101a2844), #24384c url('../assts/cenario/fundo-cenario.png') center / cover;
+}
+
+.sprite {
+  position: absolute;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sprite > img {
+  position: absolute;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.barra {
+  position: absolute;
+  z-index: 5;
+  top: max(16px, env(safe-area-inset-top));
+  left: 22px;
+  right: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.barra strong {
+  background: #111b29e6;
+  border: 1px solid #4c5b6c;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acoes a {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #111b29e6;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.acoes .botao-icone {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.botao-icone img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Piso contínuo: módulos e faixas em pixels fixos, sem esticar imagens. */
+#chao {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 48px;
+  z-index: 1;
+  border-top: 4px solid #c6d1dc;
+  border-bottom: 4px solid #0a121d;
+  background: repeating-linear-gradient(90deg, transparent 0 118px, #111a26 118px 121px), linear-gradient(#7e8c9b 0 8px, #344250 8px 100%);
+  box-shadow: 0 -3px 0 #101923, 0 5px 12px #0004;
+}
+
+#chao::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 10px;
+  height: 12px;
+  background: repeating-linear-gradient(125deg, #ffd140 0 18px, #1c2632 18px 36px);
+  border-top: 1px solid #111b27;
+  border-bottom: 1px solid #111b27;
+}
+
+#chao::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44px;
+  height: var(--area-inferior);
+  background: linear-gradient(#17222f, #0e1621);
+}
+
+#robo {
+  top: 0;
+  left: 0;
+  width: var(--robo-largura);
+  height: var(--robo-altura);
+  z-index: 3;
+}
+
+#sombra-robo {
+  width: calc(var(--robo-largura) * .94);
+  height: 14px;
+  z-index: 2;
+}
+
+.obstaculo {
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.caixa-quebrada {
+  opacity: .85;
+}
+
+.espinho {
+  --abertura: 0;
+  clip-path: inset(calc((1 - var(--abertura)) * 70%) 0 0);
+}
+
+#robo.robo-morrendo {
+  transform-origin: 50% 100%;
+  animation: desligar .65s ease-in forwards;
+}
+
+@keyframes desligar {
+  to {
+    rotate: 8deg;
+    translate: 0 5px;
+    filter: saturate(.35);
+    opacity: .55;
+  }
+}
+
+.aviso-espinho {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 38px;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  animation: alerta .4s ease-in-out infinite alternate;
+}
+
+.sinal-alerta {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 25px;
+  padding-top: 5px;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: #ffe096;
+  color: #253344;
+  font: 900 17px/1 Arial, sans-serif;
+}
+
+.aviso-espinho::after {
+  content: '';
+  position: absolute;
+  bottom: 1px;
+  width: 34px;
+  height: 2px;
+  border-radius: 50%;
+  background: #eac15c;
+  box-shadow: 0 0 8px 2px #ffba3b40;
+}
+
+@keyframes alerta {
+  to {
+    opacity: .55;
+  }
+}
+
+.efeito-colisao {
+  width: 100px;
+  height: 94px;
+  z-index: 4;
+  animation: impacto .35s ease-out forwards;
+}
+
+@keyframes impacto {
+  from {
+    scale: .4;
+    opacity: 1;
+  }
+
+  to {
+    scale: 1.3;
+    opacity: 0;
+  }
+}
+
+#pausa {
+  position: absolute;
+  z-index: 6;
+  top: 35%;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  color: var(--amarelo);
+  background: #111b29ee;
+  padding: 24px;
+  pointer-events: none;
+}
+
+@media (max-width: 520px) {
+  .pagina-menu {
+    padding: 18px;
+  }
+
+  .menu {
+    padding: 28px 22px;
+  }
+
+  #jogo {
+    --robo-largura: 108px;
+    --robo-altura: 100px;
+    --caixa-tamanho: 60px;
+    --espinho-largura: 100px;
+  }
+
+  .barra {
+    left: 12px;
+    right: 12px;
+    gap: 6px;
+  }
+
+  .barra strong {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .acoes {
+    gap: 4px;
+  }
+
+  .acoes .botao-icone {
+    width: 46px;
+    height: 46px;
+  }
+
+  .acoes a {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .pagina-menu {
+    padding: 16px;
+  }
+
+  .robo-menu {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 12px;
+  }
+
+  #jogo {
+    --robo-largura: 96px;
+    --robo-altura: 89px;
+    --caixa-tamanho: 54px;
+    --espinho-largura: 92px;
+    --area-inferior: 100px;
+  }
+
+  .barra {
+    top: 6px;
+  }
+
+  .barra strong {
+    padding: 6px 10px;
+  }
+
+  .acoes .botao-icone {
+    width: 40px;
+    height: 40px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviso-espinho {
+    animation: none;
+  }
+
+  #robo.robo-morrendo {
+    animation: none;
+    filter: saturate(.35);
+  }
+}

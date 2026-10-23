@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robô em Fuga - Ranking</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/placar/ranking.js" defer></script>
+  <script src="js/placar/lista-ranking.js" defer></script>
+</head>
+<body class="pagina-menu">
+  <main class="menu menu-ranking">
+    <h1>Ranking</h1>
+    <p class="descricao-menu">Quem sobreviveu por mais tempo?<br>O melhor tempo de cada pessoa, do maior para o menor.</p>
+    <p id="ranking-vazio">Nenhum tempo registrado ainda. Jogue uma partida e salve seu nome para aparecer aqui!</p>
+    <table id="tabela-ranking" class="tabela-ranking" hidden>
+      <caption class="sr-only">Ranking de sobrevivência</caption>
+      <thead><tr><th scope="col">Posição</th><th scope="col">Nome</th><th scope="col">Tempo</th></tr></thead>
+      <tbody id="lista-ranking"></tbody>
+    </table>
+    <p class="nota-ranking">Registros salvos somente neste navegador. Use o mesmo nome para atualizar seu melhor tempo.</p>
+    <a class="botao botao-principal" href="game.html">Jogar</a>
+    <a class="link-menu" href="menu.html">Voltar ao menu</a>
+  </main>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robô em Fuga - Game Over</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/placar/resultado.js" defer></script>
+  <script src="js/placar/recorde.js" defer></script>
+  <script src="js/gameover.js" defer></script>
+  <script src="js/placar/ranking.js" defer></script>
+  <script src="js/placar/registrar.js" defer></script>
+</head>
+<body class="pagina-menu">
+  <main class="menu">
+    <h1>Game Over</h1>
+    <p class="descricao-menu">Boa tentativa. Vamos mais uma vez?</p>
+    <div class="placar-final">
+      <div><span>Seu tempo</span><p><strong id="resultado">0.0</strong> <small>s</small></p></div>
+      <div><span>Melhor tempo</span><p><strong id="recorde">0.0</strong> <small>s</small></p></div>
+    </div>
+    <form id="registrar-tempo" class="formulario-registro" aria-describedby="nota-registro">
+      <label for="nome-jogador">Seu nome</label>
+      <input id="nome-jogador" name="nome" type="text" maxlength="30" required autocomplete="nickname" placeholder="Digite seu nome">
+      <p id="nota-registro" class="nota-ranking">Salve seu tempo no ranking deste navegador. Vale o melhor resultado de cada nome.</p>
+      <button id="salvar-tempo" type="submit" class="botao botao-principal">Registrar tempo</button>
+    </form>
+    <p id="mensagem-registro" class="mensagem-registro" role="status" aria-live="polite"></p>
+    <a class="botao botao-secundario" href="game.html">Jogar novamente</a>
+    <a class="link-menu" href="ranking.html">Ver ranking</a>
+    <a class="link-menu" href="menu.html">Voltar ao menu</a>
+  </main>
+</body>
+</html>
