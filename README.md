@@ -31,3 +31,5 @@ Você também pode inventar falas engraçadas, dicas para o jogador, mensagens p
 4. Informe o nome do arquivo e a autoria. Use somente materiais próprios, autorizados ou com licença que permita o uso.
 5. Para sugerir uma fala, escreva a frase e diga em que situação o robô deveria falar.
 
+sla
+
