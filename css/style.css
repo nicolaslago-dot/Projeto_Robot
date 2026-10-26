@@ -578,3 +578,31 @@ button:disabled {
     filter: saturate(.35);
   }
 }
+
+caixa {
+  background: linear-gradient(135deg, #e78b1b, #f47648);
+  border: 2px solid #ffd166;
+  box-shadow: 0 0 15px #ff8c00;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.caixa:hover {
+  background: linear-gradient(135deg, #00cfff, #004cff);
+  box-shadow: 0 0 25px #00cfff;
+  transform: scale(1.05);
+  
+}.caixa {
+  background: linear-gradient(135deg, #ff8c00, #ff4500);
+  border: 2px solid #ffd166;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #ff8c00;
+  transition: 0.3s;
+}
+
+.caixa:hover {
+  background: linear-gradient(135deg, #00cfff, #004cff);
+  box-shadow: 0 0 25px #00cfff;
+  transform: scale(1.05);
+}
+
