@@ -1,0 +1,17 @@
+{
+  "ferramenta": "image_gen (integrada)",
+  "referencias": [
+    "assts/personagem/robo-parado.png",
+    "assts/obstaculos/caixa-caindo.png"
+  ],
+  "assets": [
+    {
+      "arquivo": "moeda.png",
+      "prompt": "Use case: stylized-concept. Asset type: one collectible coin sprite for the existing 2D side-view browser game Robô em Fuga. The robot and crate images in context are STYLE REFERENCES only; do not reproduce the robot, crate, or any logo. Create a SINGLE round thick gold industrial token, shown nearly front-on with slight thickness visible at the right edge, a simple embossed five-point star in the center. Match the references' polished cartoon game art: strong black/dark-navy outlines, chunky beveled forms, clean cel-shaded gold/yellow surfaces, warm amber shadows, small pale highlights, subtly gray-blue metal rim bolts. Very legible when reduced to 36 pixels. Center one entire object filling about 85% of a square canvas, with clear padding and no clipped outline. Genuine transparent background, no floor, no cast shadow outside the silhouette, no scenery, no glow cloud. No letters, no numbers, no logos, no watermark. This is a standalone raster sprite ready to place in a game."
+    },
+    {
+      "arquivo": "bateria.png",
+      "prompt": "Use case: stylized-concept. Asset type: one collectible battery sprite for the 2D side-view game Robô em Fuga. The robot and yellow crate images previously shown are STYLE REFERENCES only; the gold coin just generated is another matching collectible style reference. Create ONE compact upright rechargeable industrial battery pack, slightly three-quarter front view with its right thickness visible, dark blue-gray steel side rails and corner caps, yellow metal top and bottom caps, one small silver top contact. A vivid cyan/turquoise front energy window with ONE large simple yellow lightning-bolt pictogram identifies it as a battery even at 44 pixels. Match the existing assets: thick dark outlines, rounded chunky mechanical forms, clean cartoon cel shading, beveled metal panels and controlled crisp pale highlights. The battery is a collectible item, not a weapon. Center the whole object on square canvas filling 85% of the height, vertical silhouette about half as wide as tall, generous transparent padding. Actual transparent background, no scenery, no floor or cast shadow, no clouds or surrounding glow, no character. No text, numbers, logos or watermark. Standalone raster game sprite."
+    }
+  ]
+}

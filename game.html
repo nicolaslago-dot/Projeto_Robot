@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Robô em Fuga - Jogo</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/audio.js" defer></script>
   <!-- Imagens -->
   <script src="js/imagens/recursos.js" defer></script>
   <script src="js/imagens/assets.js" defer></script>
@@ -17,7 +18,11 @@
   <script src="js/jogo/colisoes.js" defer></script>
   <script src="js/jogo/caixas.js" defer></script>
   <script src="js/jogo/espinhos.js" defer></script>
+  <script src="js/jogo/serra.js" defer></script>
+  <script src="js/jogo/laser.js" defer></script>
+  <script src="js/jogo/paredes.js" defer></script>
   <script src="js/jogo/obstaculos.js" defer></script>
+  <script src="js/jogo/coletaveis.js" defer></script>
   <script src="js/jogo/fim-partida.js" defer></script>
   <script src="js/jogo/animacao.js" defer></script>
 
@@ -37,18 +42,24 @@
 <body>
   <main id="jogo" aria-label="Arena do jogo">
     <div class="barra">
-      <strong>Tempo: <span id="tempo">0.0</span> s</strong>
+      <strong>Tempo: <span id="tempo">0.0</span> s <small>Nível <span id="nivel">1</span></small></strong>
       <div class="acoes">
+        <button id="som" class="botao-som" data-musica="jogo" aria-label="Desativar som" aria-pressed="false" title="Desativar som">Som: ligado</button>
         <button id="pausar" class="botao-icone" aria-label="Pausar" title="Pausar"><img src="assts/interface/icones/icone-pausa.png" alt=""></button>
         <button id="tela-cheia" class="botao-icone" aria-label="Tela cheia" title="Tela cheia"><img src="assts/interface/icones/icone-tela-cheia.png" alt=""></button>
         <a href="menu.html">Menu</a>
       </div>
     </div>
 
+    <div class="painel-coleta" aria-label="Itens coletados">
+      <div class="contadores"><span>Moedas <b id="moedas">0</b></span><span>Baterias <b id="baterias">0</b></span></div>
+    </div>
+
     <div id="chao"></div>
     <div id="sombra-robo" class="sprite" aria-hidden="true"></div>
     <div id="robo" class="sprite" role="img" aria-label="Robô amarelo"></div>
     <div id="pausa" hidden>Jogo pausado</div>
+    <p id="instrucoes" class="dica-jogo">A/D ou ← → para mover · Espaço para pular · P para pausar<br>Colete moedas e baterias enquanto desvia dos perigos.</p>
   </main>
 </body>
 </html>

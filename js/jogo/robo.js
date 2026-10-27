@@ -11,6 +11,7 @@ function pular() {
   const noChao = robo.y + robo.altura >= chao - 1;
   if (noChao) {
     robo.velocidadeY = -FORCA_PULO;
+    AudioJogo.efeito('pulo');
   }
 }
 

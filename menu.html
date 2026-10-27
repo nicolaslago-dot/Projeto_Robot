@@ -5,14 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Robô em Fuga - Menu</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/audio.js" defer></script>
 </head>
 <body class="pagina-menu">
   <main class="menu">
     <div class="robo-menu" role="img" aria-label="Robô amarelo"></div>
     <h1>Robô em Fuga</h1>
-    <p class="descricao-menu">Desvie das caixas, pule as armadilhas<br>e sobreviva o máximo que conseguir.</p>
+    <p class="descricao-menu">Desvie das caixas, pule a serra e escape dos lasers.<br>A dificuldade aumenta com o tempo!</p>
+    <p class="nota-ranking">A/D ou ← → para mover · Espaço para pular · P para pausar</p>
     <a class="botao botao-principal" href="game.html">Jogar</a>
     <a class="link-menu" href="ranking.html">Ver ranking</a>
+    <button id="som" class="botao-som" data-musica="menu" aria-label="Desativar som" aria-pressed="false">Som: ligado</button>
   </main>
 </body>
 </html>

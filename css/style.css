@@ -399,6 +399,186 @@ button:disabled {
   opacity: .85;
 }
 
+.botao-som {
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid var(--linha);
+  background: #111b29e6;
+  color: var(--texto);
+  font-size: 12px;
+}
+
+.menu .botao-som {
+  display: block;
+  margin: 16px auto 0;
+}
+
+.barra small {
+  display: block;
+  margin-top: 2px;
+  color: var(--amarelo);
+  font-size: 11px;
+}
+
+.dica-jogo {
+  position: absolute;
+  z-index: 4;
+  bottom: 22px;
+  width: 100%;
+  padding: 0 12px;
+  margin: 0;
+  color: var(--secundario);
+  font-size: 12px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.serra {
+  z-index: 4;
+}
+
+.serra > img {
+  rotate: var(--rotacao, 0deg);
+  transform-origin: 50% 50%;
+}
+
+.aviso-serra {
+  align-items: center;
+  width: 120px !important;
+  height: 30px;
+  border: 1px solid #ffc857;
+  border-radius: 6px;
+  background: #292117ed;
+  color: #ffe096;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.painel-coleta {
+  position: absolute;
+  top: max(88px, calc(env(safe-area-inset-top) + 72px));
+  left: 22px;
+  right: 22px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.contadores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.contadores > span {
+  padding: 6px 9px;
+  border: 1px solid #4c5b6c;
+  border-radius: 8px;
+  background: #111b29ee;
+  font-variant-numeric: tabular-nums;
+}
+
+.contadores b { color: var(--amarelo); margin-left: 5px; }
+
+.coletavel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+.aviso-serra::after {
+  display: none;
+}
+
+.laser {
+  z-index: 4;
+  overflow: visible;
+}
+
+.laser-feixe {
+  position: absolute;
+  top: calc(var(--emissor-tamanho) / 2);
+  bottom: calc(var(--emissor-tamanho) / 2);
+  left: 0;
+  width: 100%;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #ff174488, #ff4b82 24%, #fff 47% 53%, #ff4b82 76%, #ff174488);
+  box-shadow: 0 0 8px #ff3669, 0 0 24px #ff1744aa, 0 0 40px #ff174444;
+  scale: var(--abertura) 1;
+}
+
+.laser-aviso .laser-feixe {
+  left: calc(50% - 1px);
+  width: 2px;
+  background: repeating-linear-gradient(0deg, #ffd14066 0 8px, transparent 8px 16px);
+  box-shadow: none;
+  scale: 1;
+}
+
+.emissor-laser {
+  left: calc(50% - var(--emissor-tamanho) / 2);
+  z-index: 1;
+  border: 1px solid #ffd4e0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0 8%, #ff9bb9 20%, #ff245f 50%, #8b123a 85%);
+  box-shadow: 0 0 5px #ff245faa;
+}
+
+.emissor-topo {
+  top: 0;
+}
+
+.emissor-chao {
+  bottom: 0;
+}
+
+.laser-aviso .emissor-laser {
+  filter: saturate(.7) brightness(calc(.8 + var(--carga) * .4)) drop-shadow(0 0 5px #ffbd3688);
+}
+
+.parede {
+  z-index: 4;
+  overflow: visible;
+}
+
+.parede-laser {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(0deg, #ff335544 0 8px, #ff335577 8px 11px), linear-gradient(90deg, #501c3bcc, #ff1d5355);
+  border-right: 5px solid #ffe2eb;
+  box-shadow: inset -12px 0 22px #ff245f99, 0 0 18px #ff245f99;
+}
+
+.parede-esquerda {
+  left: 0;
+}
+
+.parede-direita {
+  right: 0;
+  border-right: 0;
+  border-left: 5px solid #ffe2eb;
+  box-shadow: inset 12px 0 22px #ff245f99, 0 0 18px #ff245f99;
+}
+
+.parede-aviso .parede-laser {
+  border-color: #ffd140;
+  border-style: dashed;
+  background: repeating-linear-gradient(135deg, #ffd1400d 0 12px, #ffd14024 12px 24px);
+  box-shadow: none;
+}
+
+#jogo:has(#pausa:not([hidden])) .aviso-espinho {
+  animation-play-state: paused;
+}
+
 .espinho {
   --abertura: 0;
   clip-path: inset(calc((1 - var(--abertura)) * 70%) 0 0);
@@ -513,6 +693,8 @@ button:disabled {
     gap: 6px;
   }
 
+  .painel-coleta { left: 12px; right: 12px; top: 88px; font-size: 11px; }
+
   .barra strong {
     font-size: 13px;
     padding: 10px;
@@ -520,6 +702,12 @@ button:disabled {
 
   .acoes {
     gap: 4px;
+  }
+
+  .acoes .botao-som {
+    max-width: 70px;
+    padding: 6px;
+    font-size: 11px;
   }
 
   .acoes .botao-icone {
@@ -556,6 +744,8 @@ button:disabled {
   .barra {
     top: 6px;
   }
+
+  .painel-coleta { top: 61px; }
 
   .barra strong {
     padding: 6px 10px;

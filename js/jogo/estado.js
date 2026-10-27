@@ -16,6 +16,15 @@ let olhandoEsquerda = false;
 let tempo = 0;
 let ultimaCaixa = 0;
 let ultimoEspinho = 0;
+let ultimaSerra = 0;
+let ultimoLaser = 0;
+let ultimaParede = 0;
+
+let coletaveis = [];
+let moedas = 0;
+let baterias = 0;
+let ultimaMoeda = 0;
+let ultimaBateria = 0;
 
 // Passos curtos preservam o tempo decorrido e impedem saltos nas colisões.
 const PASSO = 1 / 120;

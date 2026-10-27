@@ -10,6 +10,26 @@ function colidiu(item) {
   if (item.tipo === 'espinho') {
     return colidiuEspinho(item, limites);
   }
+  if (item.tipo === 'serra') {
+    const raio = item.largura / 2;
+    const centroX = item.x + raio;
+    const centroY = item.y + raio;
+    const x = Math.max(limites.esquerda, Math.min(centroX, limites.direita));
+    const y = Math.max(limites.topo, Math.min(centroY, limites.base));
+    return (x - centroX) ** 2 + (y - centroY) ** 2 < (raio * .95) ** 2;
+  }
+  if (item.tipo === 'parede') {
+    const alcance = item.largura * item.abertura;
+    return alcance > 0 && limites.topo < chao && limites.base > 0 &&
+      (limites.esquerda < alcance || limites.direita > largura - alcance);
+  }
+  if (item.tipo === 'laser') {
+    const meiaLargura = item.largura * item.abertura / 2;
+    const centro = item.x + item.largura / 2;
+    return meiaLargura > 0 && limites.topo < chao - item.tamanhoEmissor / 2 &&
+      limites.base > item.y + item.tamanhoEmissor / 2 &&
+      limites.esquerda < centro + meiaLargura && limites.direita > centro - meiaLargura;
+  }
 
   return colidiuCaixa(item, limites);
 }

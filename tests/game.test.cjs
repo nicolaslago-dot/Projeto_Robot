@@ -311,6 +311,228 @@ function resultado(search, storage) {
   return elementos;
 }
 
+test('serra avisa, emerge do chão, atravessa a arena e desaparece', () => {
+  const { run } = game();
+  assert.equal(run("criarObstaculo('serra')"), true);
+  run('globalThis.serra = obstaculos[0]; robo.x = largura / 2;');
+  assert.equal(run('serraPerigosa(serra)'), false);
+  const inicio = run('serra.x');
+  run('serra.idade = serra.tempoAviso + .35; atualizarSerra(serra, 0);');
+  assert.equal(run('serraPerigosa(serra)'), true);
+  assert.ok(run('serra.largura > 100'));
+  assert.equal(run('serra.y + serra.altura / 2'), run('chao'));
+  run('desenharSerra(serra);');
+  assert.equal(run('serra.imagem.dataset.asset'), 'serra-circular');
+  run('serra.idade += .1; atualizarSerra(serra, .1);');
+  assert.notEqual(run('serra.x'), inicio);
+  run('robo.x = serra.x; robo.y = chao - robo.altura;');
+  assert.equal(run('colidiu(serra)'), true);
+  run('robo.y -= 100;');
+  assert.equal(run('colidiu(serra)'), false);
+  run('for (let i = 0; i < 2000 && !obstaculoExpirou(serra); i++) { serra.idade += PASSO; atualizarSerra(serra, PASSO); }');
+  assert.equal(run('obstaculoExpirou(serra)'), true);
+});
+
+test('duas esferas carregam, disparam uma barreira vertical e somem após desligar', () => {
+  const { run } = game();
+  assert.equal(run("criarObstaculo('laser')"), true);
+  run('globalThis.laser = obstaculos[0]; robo.x = laser.x - robo.largura / 2;');
+  assert.equal(run('laser.emissores.length'), 2);
+  assert.ok(run('laser.tamanhoEmissor <= 18'));
+  assert.equal(run('laserPerigoso(laser)'), false);
+  run('laser.idade = laser.tempoAviso + .5; atualizarLaser(laser);');
+  assert.equal(run('laserPerigoso(laser)'), true);
+  assert.equal(run('colidiu(laser)'), true);
+  run('robo.x = (largura - robo.largura) / 2;');
+  assert.equal(run('colidiu(laser)'), false);
+  run('robo.x = 0;');
+  assert.equal(run('colidiu(laser)'), false);
+  run('robo.x = largura - robo.largura;');
+  assert.equal(run('colidiu(laser)'), false);
+  run('laser.idade = laser.tempoAviso + laser.duracao; atualizarLaser(laser);');
+  assert.equal(run('laserPerigoso(laser)'), false);
+  assert.equal(run('obstaculoExpirou(laser)'), false);
+  run('laser.idade += .36; atualizarObstaculos(0);');
+  assert.equal(run('obstaculoExpirou(laser)'), true);
+  assert.equal(run('obstaculos.includes(laser)'), false);
+  assert.equal(run('laser.imagem.removed'), true);
+});
+
+test('ameaças entram aos poucos e tipos diferentes podem surgir juntos', () => {
+  const { run } = game();
+  run('ultimaSerra = ultimoLaser = 100; gerarObstaculos(dificuldadeAtual());');
+  assert.equal(run("obstaculos.some(item => item.tipo === 'serra' || item.tipo === 'laser')"), false);
+  run("tempo = 20; ultimaSerra = 100; gerarObstaculos(dificuldadeAtual());");
+  assert.equal(run("obstaculos.some(item => item.tipo === 'serra')"), true);
+  assert.equal(run("criarObstaculo('laser')"), true);
+  assert.equal(run("criarObstaculo('espinho')"), true);
+  assert.equal(run("criarObstaculo('serra')"), false);
+  assert.equal(run("criarObstaculo('laser')"), false);
+});
+
+test('resize e pausa preservam serra, laser e paredes sem avançar os perigos', () => {
+  for (const tipo of ['serra', 'laser', 'parede']) {
+    const { run, document } = game();
+    run(`criarObstaculo('${tipo}'); globalThis.item = obstaculos[0]; item.idade = item.tempoAviso + .7;`);
+    run(tipo === 'serra' ? 'atualizarSerra(item, .1);' : tipo === 'laser' ? 'atualizarLaser(item);' : 'atualizarParede(item);');
+    const idade = run('item.idade');
+    document.getElementById('jogo').clientWidth = 360;
+    run('ajustarTela(); pausar(); animar(0); animar(10000);');
+    assert.equal(run('item.idade'), idade);
+    assert.equal(run('obstaculos.includes(item)'), true);
+    assert.ok(run('Number.isFinite(item.x) && Number.isFinite(item.y)'));
+    if (tipo === 'parede') {
+      assert.ok(run('largura - 2 * item.largura >= robo.largura + 24'));
+    } else if (tipo === 'laser') {
+      assert.ok(run('Math.max(item.x, largura - item.x - item.largura) >= robo.largura + 24'));
+    } else {
+      assert.equal(run('item.y + item.altura / 2'), run('chao'));
+    }
+  }
+});
+
+test('partida de cinco minutos mantém caixas e serras em todos os minutos com perigos simultâneos', () => {
+  for (const tamanho of [360, 390, 1000, 1920]) {
+    const { run, document } = game();
+    document.getElementById('jogo').clientWidth = tamanho;
+    if (tamanho < 520) {
+      document.getElementById('robo').offsetWidth = 108;
+      document.getElementById('robo').offsetHeight = 100;
+    }
+    run('ajustarTela();');
+    // A geração usa o código real; somente a morte fica suspensa nesta simulação.
+    const resultado = JSON.parse(run(`
+      colidiu = () => false;
+      globalThis.minutos = Array.from({ length: 5 }, () => ({}));
+      globalThis.criados = new Set();
+      globalThis.combinacoes = new Set();
+      for (let i = 0; i < 300 * 120; i++) {
+        atualizar(PASSO);
+        for (const item of obstaculos) {
+          if (!criados.has(item)) {
+            criados.add(item);
+            const minuto = minutos[Math.min(4, Math.floor(tempo / 60))];
+            minuto[item.tipo] = (minuto[item.tipo] || 0) + 1;
+          }
+        }
+        if (obstaculos.some(item => item.tipo === 'serra')) {
+          for (const item of obstaculos) if (!item.quebrada) combinacoes.add(item.tipo);
+        }
+        for (const tipo of ['serra', 'espinho', 'laser', 'parede']) {
+          if (obstaculos.filter(item => item.tipo === tipo).length > 1) throw Error('Perigo duplicado: ' + tipo);
+        }
+      }
+      JSON.stringify({ minutos, combinacoes: [...combinacoes].sort() });
+    `));
+    for (const minuto of resultado.minutos) {
+      assert.ok(minuto.caixa >= 10, `${tamanho}px: ${JSON.stringify(resultado)}`);
+      assert.ok(minuto.serra >= 1, `${tamanho}px: ${JSON.stringify(resultado)}`);
+    }
+    assert.deepEqual(resultado.combinacoes, ['caixa', 'espinho', 'laser', 'parede', 'serra']);
+  }
+});
+
+test('novas caixas respeitam a barreira e o espaço dos emissores do laser', () => {
+  const { run } = game();
+  run("criarObstaculo('laser'); globalThis.laser = obstaculos[0]; for (let i = 0; i < 40; i++) criarObstaculo('caixa');");
+  assert.ok(run("obstaculos.some(item => item.tipo === 'caixa')"));
+  assert.equal(run("obstaculos.filter(item => item.tipo === 'caixa').every(item => item.x + item.largura <= laser.x + laser.largura / 2 - laser.tamanhoEmissor / 2 - 16 || item.x >= laser.x + laser.largura / 2 + laser.tamanhoEmissor / 2 + 16)"), true);
+});
+
+test('avisos dos novos perigos são inofensivos; contato após ativar encerra a partida', () => {
+  for (const tipo of ['serra', 'laser', 'parede']) {
+    const { run } = game();
+    run(`criarObstaculo('${tipo}'); globalThis.item = obstaculos[0]; robo.x = ${tipo === 'serra' ? 'item.x' : tipo === 'parede' ? '0' : 'item.x - robo.largura / 2'}; atualizarObstaculos(.01);`);
+    assert.equal(run('acabou'), false, tipo + ': aviso');
+    run('item.idade = item.tempoAviso + .2; atualizarObstaculos(PASSO);');
+    assert.equal(run('acabou'), true, tipo + ': ativação');
+  }
+});
+
+test('paredes fecham pelas duas laterais, deixam o centro livre e recuam antes de sumir', () => {
+  const { run } = game();
+  assert.equal(run("criarObstaculo('parede')"), true);
+  run('globalThis.parede = obstaculos[0];');
+  assert.equal(run('parede.paredes.length'), 2);
+  assert.equal(run('laserPerigoso(parede)'), false);
+  run('parede.idade = parede.tempoAviso + .2; atualizarParede(parede);');
+  const inicio = run('parede.largura * parede.abertura');
+  run('parede.idade += .6; atualizarParede(parede);');
+  const fechamento = run('parede.largura * parede.abertura');
+  assert.ok(fechamento > inicio);
+  for (const x of ['0', 'largura - robo.largura']) {
+    run(`robo.x = ${x};`);
+    assert.equal(run('colidiu(parede)'), true);
+  }
+  run('robo.x = (largura - robo.largura) / 2;');
+  assert.equal(run('colidiu(parede)'), false);
+  run('parede.idade = parede.tempoAviso + parede.duracao - .4; atualizarParede(parede);');
+  assert.ok(run('parede.largura * parede.abertura') < fechamento);
+  run('parede.idade = parede.tempoAviso + parede.duracao; atualizarParede(parede);');
+  assert.equal(run('parede.abertura'), 0);
+  assert.equal(run('laserPerigoso(parede)'), false);
+  run('parede.idade += .36; atualizarObstaculos(0);');
+  assert.equal(run('obstaculos.includes(parede)'), false);
+  assert.equal(run('parede.imagem.removed'), true);
+});
+
+test('paredes começam a ficar disponíveis aos 12 segundos, antes do laser entre bolinhas', () => {
+  const { run } = game();
+  run('ultimaParede = 12; tempo = 11.9; gerarObstaculos(dificuldadeAtual());');
+  assert.equal(run("obstaculos.some(item => item.tipo === 'parede')"), false);
+  run('tempo = 12; gerarObstaculos(dificuldadeAtual());');
+  assert.equal(run("obstaculos.some(item => item.tipo === 'parede')"), true);
+  assert.equal(run("obstaculos.some(item => item.tipo === 'laser')"), false);
+});
+
+test('caixas reservam o corredor de fuga entre as paredes e as bolinhas continuam sendo outro obstáculo', () => {
+  const { run } = game();
+  run("criarObstaculo('parede'); globalThis.parede = obstaculos[0]; for (let i = 0; i < 40; i++) criarObstaculo('caixa');");
+  assert.ok(run("obstaculos.some(item => item.tipo === 'caixa')"));
+  assert.equal(run("obstaculos.filter(item => item.tipo === 'caixa').every(item => item.x >= parede.largura + 16 && item.x + item.largura <= largura - parede.largura - 16)"), true);
+  assert.equal(run("criarObstaculo('laser')"), true);
+  run("obstaculos.forEach(removerObstaculo); obstaculos = []; criarObstaculo('laser');");
+  assert.equal(run('obstaculos[0].emissores.length'), 2);
+  assert.ok(run('obstaculos[0].tamanhoEmissor <= 18'));
+});
+
+test('serra pendente não suspende caixas durante parede e laser', () => {
+  const { run } = game();
+  run("tempo = 120; criarObstaculo('parede'); criarObstaculo('laser'); ultimaSerra = 100; ultimaCaixa = 10; gerarObstaculos(dificuldadeAtual());");
+  assert.ok(run("obstaculos.some(item => item.tipo === 'caixa')"));
+  assert.ok(run("obstaculos.some(item => item.tipo === 'serra')"));
+  assert.ok(run("obstaculos.some(item => item.tipo === 'parede')"));
+  assert.ok(run("obstaculos.some(item => item.tipo === 'laser')"));
+});
+
+test('caixas podem nascer enquanto a serra está atravessando', () => {
+  const { run } = game();
+  run("criarObstaculo('serra'); obstaculos[0].idade = obstaculos[0].tempoAviso + .5;");
+  assert.equal(run("criarObstaculo('caixa')"), true);
+  assert.equal(run("criarObstaculo('espinho')"), true);
+});
+
+test('pulo permite ultrapassar uma serra vindo de qualquer lado, inclusive na dificuldade máxima', () => {
+  for (const direcao of [-1, 1]) {
+    for (const t of [0, 90]) {
+      const { run } = game();
+      run(`
+        tempo = ${t}; criarObstaculo('serra'); globalThis.serra = obstaculos[0];
+        serra.direcao = ${direcao};
+        serra.idade = serra.tempoAviso + .35;
+        serra.x = serra.direcao > 0 ? robo.x + robo.largura * .12 - serra.largura - 30 : robo.x + robo.largura * .88 + 30;
+        pular();
+        for (let i = 0; i < 90; i++) {
+          atualizarRobo(PASSO);
+          atualizarObstaculos(PASSO);
+          if (acabou) break;
+        }
+      `);
+      assert.equal(run('acabou'), false, `lado ${direcao}, tempo ${t}`);
+    }
+  }
+});
+
 test('placar mostra o tempo da URL e mantém o melhor resultado no navegador', () => {
   let salvo = '20';
   const storage = {
@@ -337,4 +559,64 @@ test('placar funciona sem armazenamento e rejeita tempos inválidos', () => {
     assert.equal(invalido.resultado.textContent, '0.0');
     assert.equal(invalido.recorde.textContent, '0.0');
   }
+});
+
+test('moedas e baterias usam sprites PNG e são coletadas uma única vez', () => {
+  const { run } = game();
+  for (const tipo of ['moeda', 'bateria']) {
+    assert.equal(run(`criarColetavel('${tipo}')`), true);
+    assert.equal(run('coletaveis[0].imagem.dataset.asset'), tipo);
+    const caminho = run(`RECURSOS['${tipo}'].caminho`);
+    const png = fs.readFileSync(path.join(__dirname, '..', caminho));
+    assert.equal(png.subarray(1, 4).toString(), 'PNG');
+    assert.match(caminho, /^assts\/coletaveis\//);
+    run('globalThis.item = coletaveis[0]; item.x = robo.x + 40; item.y = robo.y + 40; atualizarColetaveis(0);');
+    assert.equal(run('coletaveis.length'), 0);
+    assert.equal(run('item.imagem.removed'), true);
+  }
+  run('atualizarColetaveis(0); desenhar();');
+  assert.equal(run('moedas'), 1);
+  assert.equal(run('baterias'), 1);
+});
+
+test('coletar bateria preserva dificuldade, movimento e pulo anteriores', () => {
+  const { run } = game();
+  run(`tempo = 90; criarColetavel('bateria'); coletaveis[0].x = robo.x + 40;
+    coletaveis[0].y = robo.y + 40; atualizarColetaveis(0);
+    robo.x = 0; teclas.KeyD = true; criarObstaculo('caixa');
+    obstaculos[0].x = 850; atualizar(.5);`);
+  assert.equal(run('dificuldadeAtual().nivel'), 6);
+  assert.equal(run('robo.x'), 140);
+  assert.equal(run('obstaculos[0].y + obstaculos[0].altura'), 180);
+  run('pular(); atualizarRobo(.1); globalThis.velocidade = robo.velocidadeY; pular();');
+  assert.equal(run('robo.velocidadeY'), run('velocidade'));
+  assert.equal(run('typeof poderes'), 'undefined');
+});
+
+test('bateria não protege contra colisões', () => {
+  const { run } = game();
+  run(`criarColetavel('bateria'); coletaveis[0].x = robo.x + 40;
+    coletaveis[0].y = robo.y + 40; atualizarColetaveis(0);
+    criarObstaculo('caixa'); obstaculos[0].x = robo.x + 30;
+    obstaculos[0].y = robo.y; atualizarObstaculos(PASSO);`);
+  assert.equal(run('baterias'), 1);
+  assert.equal(run('acabou'), true);
+});
+
+test('coletáveis respeitam perigos, pausa, redimensionamento e expiração', () => {
+  const { run, document } = game();
+  run("criarColetavel('moeda'); criarColetavel('bateria'); globalThis.itens = [...coletaveis]; pausar(); animar(0); animar(10000);");
+  assert.equal(run('coletaveis[0].idade'), 0);
+  document.getElementById('jogo').clientWidth = 390;
+  document.getElementById('jogo').clientHeight = 550;
+  run('ajustarTela();');
+  assert.equal(run('coletaveis.length'), 2);
+  assert.ok(run('coletaveis.every(item => Number.isFinite(item.x) && Number.isFinite(item.y) && item.x >= 0 && item.x + item.largura <= largura && item.y + item.altura <= chao)'));
+  run(`coletaveis[0].idade = 12; coletaveis[0].x = robo.x + 40;
+    coletaveis[0].y = robo.y + 40; atualizarColetaveis(0);`);
+  assert.equal(run('itens[0].imagem.removed'), true);
+  assert.equal(run('moedas'), 0);
+  run(`obstaculos = [{ tipo: 'caixa', x: coletaveis[0].x, y: 0, largura: 68, altura: 68, tempoQuebrada: 0 }]; atualizarColetaveis(0);`);
+  assert.equal(run('coletaveis.length'), 0);
+  assert.equal(run('baterias'), 0);
 });

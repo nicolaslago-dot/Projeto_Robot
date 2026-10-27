@@ -9,6 +9,7 @@ async function iniciarJogo() {
     return;
   }
   carregando = false;
+  AudioJogo.iniciar();
   requestAnimationFrame(animar);
 }
 

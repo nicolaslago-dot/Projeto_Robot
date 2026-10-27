@@ -1,6 +1,24 @@
 // Imagens disponíveis. Recorte: [x, y, largura, altura], em pixels.
 // Cadastro local para permitir abrir o HTML diretamente, sem servidor.
 const RECURSOS = {
+  'moeda': {
+    caminho: 'assts/coletaveis/moeda.png',
+    largura: 1254,
+    altura: 1254,
+    recorte: [57, 61, 1146, 1143]
+  },
+  'bateria': {
+    caminho: 'assts/coletaveis/bateria.png',
+    largura: 1254,
+    altura: 1254,
+    recorte: [327, 92, 597, 1083]
+  },
+  'serra-circular': {
+    caminho: 'assts/obstaculos/serra-circular.png',
+    largura: 1280,
+    altura: 1280,
+    recorte: [0, 0, 1280, 1280]
+  },
   'fundo-cenario': {
     caminho: 'assts/cenario/fundo-cenario.png',
     largura: 1672,

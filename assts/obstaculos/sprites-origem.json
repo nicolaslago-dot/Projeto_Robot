@@ -1,0 +1,14 @@
+{
+  "ferramenta": "image_gen integrada",
+  "fundoTransparente": true,
+  "sprites": [
+    {
+      "arquivo": "serra-circular.png",
+      "prompt": "Use case: stylized-concept. Asset type: transparent 2D game sprite for the existing Robô em Fuga cartoon industrial game. Create ONE complete perfectly circular rotary saw blade, straight-on orthographic front view, centered, evenly spaced sharp chunky teeth around the entire circumference, steel silver bevels and dark blue-gray metal disk, thick near-black cartoon outlines, faceted cel-shaded highlights and shadows, small industrial golden-yellow central hub with dark bolt. Match the chunky polished hand-painted cartoon robot/crate/spike assets shown in this conversation: dark charcoal outlines, silver and slate metal, restrained yellow accents, clear compact shapes. The FULL circle is required because code will rotate it and hide its bottom half under the floor. Perfect radial circular silhouette, exactly circular, no perspective tilt, no handle, no machine body, no ground, no mounting base, no words, no letters, no watermark, no cast shadow outside the sprite. Transparent background, clean alpha cutout, square canvas with very small transparent padding."
+    },
+    {
+      "arquivo": "emissor-laser.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE transparent 2D game sprite for the existing Robô em Fuga cartoon industrial game. Create a single round spherical laser emitter orb, straight-on orthographic front view, centered. A compact circular armored metal ball, chunky dark blue-gray metal outer shell, beveled silver segmented armor panels, thick near-black cartoon outline, golden-yellow mechanical ring around a luminous red/magenta circular core, a few small bolts. Match the polished hand-painted chunky cartoon robot/crate/spike assets shown in this conversation: cel-shaded metallic facets, silver/slate metal and golden yellow accents, clear readable shapes. The object is a freestanding complete ball, perfectly round outer silhouette, no stand, no feet, no cables, no floor, no background, no surrounding scene. Do NOT draw a laser beam; game code adds the vertical beam connecting two copies of this orb. No text, no letters, no logo, no watermark, no cast shadow outside sprite. Transparent background, clean alpha cutout, square canvas, very small transparent padding."
+    }
+  ]
+}

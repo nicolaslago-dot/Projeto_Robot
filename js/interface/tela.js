@@ -27,6 +27,7 @@ function ajustarTela() {
   robo.y = Math.min(robo.y, chao - robo.altura);
 
   reposicionarObstaculos(larguraAnterior, chaoAnterior);
+  reposicionarColetaveis(larguraAnterior, chaoAnterior);
   definirAsset(imagemRobo, imagemRobo.dataset.asset || 'robo-parado');
   definirAsset(sombraRobo, 'sombra-robo');
   desenhar();
@@ -34,6 +35,18 @@ function ajustarTela() {
 
 function reposicionarObstaculos(larguraAnterior, chaoAnterior) {
   for (const item of obstaculos) {
+    if (item.tipo === 'serra') {
+      item.x = item.x / Math.max(1, larguraAnterior) * largura;
+      dimensionarObstaculo(item);
+      atualizarSerra(item, 0);
+      continue;
+    }
+    if (item.tipo === 'laser' || item.tipo === 'parede') {
+      dimensionarObstaculo(item);
+      if (item.tipo === 'laser') atualizarLaser(item);
+      else atualizarParede(item);
+      continue;
+    }
     const proporcaoX = item.x / Math.max(1, larguraAnterior - item.largura);
     const progressoQueda = (item.y + item.altura) / chaoAnterior;
     dimensionarObstaculo(item);

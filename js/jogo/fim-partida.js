@@ -5,6 +5,8 @@ function gameOver() {
   }
 
   acabou = true;
+  AudioJogo.encerrar();
+  AudioJogo.efeito('morte');
   definirAsset(imagemRobo, 'robo-morrendo');
   imagemRobo.classList.add('robo-morrendo');
   const efeito = document.createElement('div');

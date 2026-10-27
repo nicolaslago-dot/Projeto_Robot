@@ -5,6 +5,7 @@ function pausar() {
   }
 
   pausado = !pausado;
+  AudioJogo.pausar(pausado);
   // A referência é refeita mesmo se o navegador parar de desenhar durante a pausa.
   quadroAnterior = null;
   document.getElementById('pausa').hidden = !pausado;

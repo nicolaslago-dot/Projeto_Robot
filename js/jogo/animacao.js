@@ -3,9 +3,13 @@ function atualizar(segundos) {
   tempo += segundos;
   ultimaCaixa += segundos;
   ultimoEspinho += segundos;
+  if (tempo >= 18) ultimaSerra += segundos;
+  if (tempo >= 35) ultimoLaser += segundos;
+  ultimaParede += segundos;
 
   atualizarRobo(segundos);
   atualizarObstaculos(segundos);
+  if (!acabou) atualizarColetaveis(segundos);
 }
 
 function animar(agora) {
