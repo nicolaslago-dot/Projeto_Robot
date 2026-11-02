@@ -1,4 +1,4 @@
-# Robô em Fuga
+# Sky Trap
 
 ## Como jogar
 
@@ -59,4 +59,3 @@ Você também pode inventar falas engraçadas, dicas para o jogador, mensagens p
 5. Para sugerir uma fala, escreva a frase e diga em que situação o robô deveria falar.
 
 sla
-
