@@ -2,6 +2,8 @@
 
 ## Como jogar
 
+## Link do jogo: https://nicolaslago-dot.github.io/Projeto_Robot/
+
 Abra `menu.html` no navegador e clique em **Jogar**. Use **A/D** ou **←/→** para mover, **Espaço**, **W** ou **↑** para pular e **P** para pausar.
 
 - O botão **Som** ativa ou desativa músicas e efeitos e salva a preferência neste navegador. Se o navegador bloquear a música automática, clique na página ou pressione uma tecla.
